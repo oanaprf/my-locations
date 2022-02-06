@@ -1,6 +1,10 @@
+import { Routes, Route, Navigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
 import Toolbar from "./components/Toolbar";
+import Categories from "./components/categories/Categories";
+import Locations from "./components/locations/Locations";
+import AddCategory from "./components/categories/AddCategory";
 
 const useStyles = makeStyles({
   app: {
@@ -12,9 +16,12 @@ const useStyles = makeStyles({
   },
   header: {
     display: "flex",
-    margin: "30px 0 0 50px",
     color: "#1976d2",
     alignItems: "center",
+    margin: "30px 50px",
+  },
+  body: {
+    marginLeft: 50,
   },
 });
 
@@ -25,6 +32,14 @@ const App = () => {
       <div className={classes.header}>
         <Typography variant="h2">My Locations</Typography>
         <Toolbar />
+      </div>
+      <div className={classes.body}>
+        <Routes>
+          <Route path="/categories/add" element={<AddCategory />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/locations" element={<Locations />} />
+          <Route path="/" element={<Navigate to="/categories" />} />
+        </Routes>
       </div>
     </div>
   );
