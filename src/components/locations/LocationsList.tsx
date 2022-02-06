@@ -15,13 +15,13 @@ const useStyles = makeStyles({
   },
 });
 
-const Categories = () => {
+const LocationList = () => {
   const classes = useStyles();
   const locations: Location[] = useSelector(getLocations);
 
   return (
     <div className={classes.locations}>
-      {locations.map(({ id, name }) => (
+      {locations?.map(({ id, name }) => (
         <div key={id} className={classes.location}>
           {name}
         </div>
@@ -30,4 +30,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default LocationList;

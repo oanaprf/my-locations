@@ -6,6 +6,8 @@ import {
   ADD_LOCATION,
   DELETE_CATEGORY,
   DELETE_LOCATION,
+  SELECT_CATEGORY,
+  SELECT_LOCATION,
   SET_VIEW,
 } from "./actionTypes";
 
@@ -17,23 +19,54 @@ interface Action<T> {
 const viewReducer = (state = VIEWS.CATEGORIES, action: Action<string>) =>
   action?.type === SET_VIEW ? action?.payload : state;
 
-const categoriesReducer = (state = [], action: Action<Category>) => {
+const categoriesInitialState = {
+  categories: [],
+  selectedCategoryId: "",
+};
+const categoriesReducer = (
+  state = categoriesInitialState,
+  action: Action<Category | string>
+) => {
   switch (action?.type) {
     case ADD_CATEGORY:
-      return [...state, action?.payload];
+      return {
+        ...state,
+        categories: [...state?.categories, action?.payload],
+      };
+    case SELECT_CATEGORY:
+      return { ...state, selectedCategoryId: action?.payload };
     case DELETE_CATEGORY:
-      return deleteItem(state, action?.payload?.id);
+      return {
+        ...state,
+        selectedCategoryId: "",
+        categories: state?.categories?.filter(
+          (category: Category) => category?.id !== action?.payload
+        ),
+        // categories: deleteItem(state?.categories, action?.payload as string),
+      };
     default:
       return state;
   }
 };
 
-const locationsReducer = (state = [], action: Action<Location>) => {
+const locationsInitialState = {
+  locations: [],
+  selectedLocation: "",
+};
+const locationsReducer = (
+  state = locationsInitialState,
+  action: Action<Location | string>
+) => {
   switch (action?.type) {
     case ADD_LOCATION:
-      return [...state, action?.payload];
+      return { ...state, locations: [...state?.locations, action?.payload] };
+    case SELECT_LOCATION:
+      return { ...state, selectedLocationId: action?.payload };
     case DELETE_LOCATION:
-      return deleteItem(state, action?.payload?.id);
+      return {
+        ...state,
+        locations: deleteItem(state?.locations, action?.payload as string),
+      };
     default:
       return state;
   }
@@ -41,8 +74,8 @@ const locationsReducer = (state = [], action: Action<Location>) => {
 
 const rootReducer = combineReducers({
   view: viewReducer,
-  categories: categoriesReducer,
-  locations: locationsReducer,
+  category: categoriesReducer,
+  location: locationsReducer,
 });
 
 export default rootReducer;
