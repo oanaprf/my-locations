@@ -47,6 +47,9 @@ const Actions = ({ view }: { view: VIEWS }) => {
   const onNavigateToView = (id: string) => () =>
     navigate(`${viewMapping[view].baseRoute}/${id}/view`);
 
+  const onNavigateToEdit = (id: string) => () =>
+    navigate(`${viewMapping[view].baseRoute}/${id}/edit`);
+
   const onDeleteItem = (id: string) => () => {
     if (location.pathname.endsWith("/view")) navigate(viewMapping[view].baseRoute);
     dispatch(viewMapping[view].deleteAction(id));
@@ -61,6 +64,9 @@ const Actions = ({ view }: { view: VIEWS }) => {
         <>
           {!location.pathname.endsWith("/view") ? (
             <Button onClick={onNavigateToView(selectedItemId)}>View</Button>
+          ) : null}
+          {!location.pathname.endsWith("/edit") ? (
+            <Button onClick={onNavigateToEdit(selectedItemId)}>Edit</Button>
           ) : null}
           <Button onClick={onDeleteItem(selectedItemId)}>Delete</Button>
         </>

@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
 import { VIEWS, Category, Location } from "../utils/types";
-import { deleteItem } from "../utils/utils";
+import { deleteItem, editItem } from "../utils/utils";
 import {
   ADD_CATEGORY,
   ADD_LOCATION,
   DELETE_CATEGORY,
   DELETE_LOCATION,
+  EDIT_CATEGORY,
   SELECT_CATEGORY,
   SELECT_LOCATION,
   SET_VIEW,
@@ -39,10 +40,13 @@ const categoriesReducer = (
       return {
         ...state,
         selectedCategoryId: "",
-        categories: state?.categories?.filter(
-          (category: Category) => category?.id !== action?.payload
-        ),
-        // categories: deleteItem(state?.categories, action?.payload as string),
+        categories: deleteItem(state?.categories, action?.payload as string),
+      };
+    case EDIT_CATEGORY:
+      return {
+        ...state,
+        selectedCategoryId: "",
+        categories: editItem(state?.categories, action?.payload as Category | Location),
       };
     default:
       return state;

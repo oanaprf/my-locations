@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import { makeStyles } from "@mui/styles";
 import { ArrowBackIos } from "@mui/icons-material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addCategory } from "../../redux/actions";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addCategory, editCategory } from "../../redux/actions";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCategoryById } from "../../redux/selectors";
 
 const useStyles = makeStyles({
   form: {
@@ -28,13 +29,16 @@ const AddCategory = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const params = useParams();
+  const category = useSelector(getCategoryById(params?.id ?? ""));
+  const [name, setName] = useState(category?.name ?? "");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => setName(e?.target?.value);
 
   const onSave = () => {
     if (name) {
-      dispatch(addCategory({ id: uuidv4(), name }));
+      if (category?.id) dispatch(editCategory({ id: category?.id, name }));
+      else dispatch(addCategory({ id: uuidv4(), name }));
       navigate("/categories");
     }
   };
@@ -47,7 +51,7 @@ const AddCategory = () => {
         <IconButton onClick={onBackClick}>
           <ArrowBackIos />
         </IconButton>
-        <Typography variant="h5">Add a category</Typography>
+        <Typography variant="h5">{category?.id ? "Edit" : "Add"} category</Typography>
       </div>
       <TextField
         label="Name"

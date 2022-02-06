@@ -44,17 +44,12 @@ const App = () => {
           <Routes>
             <Route path="/categories/add" element={<AddCategory />} />
             <Route path="/categories/:id/view" element={<ViewCategory />} />
+            <Route path="/categories/:id/edit" element={<AddCategory />} />
             <Route path="/categories" element={<CategoriesList />} />
             <Route path="/locations" element={<Locations />} />
             <Route path="/" element={<Navigate to="/categories" />} />
           </Routes>
         </div>
-        {/* <div>
-          <Routes>
-            <Route path="/categories/:id/view" element={<AddCategory />} />
-            <Route path="/categories/:id/edit" element={<CategoriesList />} />
-          </Routes>
-        </div> */}
       </div>
     </div>
   );
