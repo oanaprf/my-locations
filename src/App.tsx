@@ -1,6 +1,6 @@
 import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
-import Toolbar from "./Toolbar";
+import Toolbar from "./components/Toolbar";
 
 const useStyles = makeStyles({
   app: {

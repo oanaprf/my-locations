@@ -1,6 +1,6 @@
 export enum VIEWS {
-  LOCATIONS,
-  CATEGORIES,
+  LOCATIONS = "LOCATIONS",
+  CATEGORIES = "CATEGORIES",
 }
 
 export interface Category {
