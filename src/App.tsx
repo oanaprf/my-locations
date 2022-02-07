@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
-import Toolbar from "./components/Toolbar";
+import Toolbar from "./components/toolbar/Toolbar";
 import CategoriesList from "./components/categories/CategoriesList";
 import Locations from "./components/locations/LocationsList";
 import AddCategory from "./components/categories/AddCategory";
@@ -17,17 +17,12 @@ const useStyles = makeStyles({
   },
   header: {
     display: "flex",
-    color: "#1976d2",
     alignItems: "center",
-    margin: "30px 50px",
+    margin: "20px 40px 80px 40px",
   },
   body: {
-    flexGrow: 1,
-    margin: "0 50px",
     display: "flex",
-  },
-  list: {
-    flexGrow: 0.4,
+    justifyContent: "center",
   },
 });
 
@@ -36,20 +31,20 @@ const App = () => {
   return (
     <div className={classes.app}>
       <div className={classes.header}>
-        <Typography variant="h2">My Locations</Typography>
+        <Typography variant="h6" style={{ fontWeight: 700 }}>
+          MY LOCATIONS
+        </Typography>
         <Toolbar />
       </div>
       <div className={classes.body}>
-        <div className={classes.list}>
-          <Routes>
-            <Route path="/categories/add" element={<AddCategory />} />
-            <Route path="/categories/:id/view" element={<ViewCategory />} />
-            <Route path="/categories/:id/edit" element={<AddCategory />} />
-            <Route path="/categories" element={<CategoriesList />} />
-            <Route path="/locations" element={<Locations />} />
-            <Route path="/" element={<Navigate to="/categories" />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/categories/add" element={<AddCategory />} />
+          <Route path="/categories/:id/view" element={<ViewCategory />} />
+          <Route path="/categories/:id/edit" element={<AddCategory />} />
+          <Route path="/categories" element={<CategoriesList />} />
+          <Route path="/locations" element={<Locations />} />
+          <Route path="/" element={<Navigate to="/categories" />} />
+        </Routes>
       </div>
     </div>
   );
