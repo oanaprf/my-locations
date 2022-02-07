@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,15 +39,21 @@ const CategoriesList = () => {
 
   return (
     <div className={classes.categories}>
-      {categories?.map(({ id, name }) => (
-        <div
-          key={id}
-          className={clsx(classes.category, selectedCategoryId === id && "selected")}
-          onClick={onSelectCategory(id)}
-        >
-          {name}
-        </div>
-      ))}
+      {categories?.length ? (
+        categories?.map(({ id, name }) => (
+          <div
+            key={id}
+            className={clsx(classes.category, selectedCategoryId === id && "selected")}
+            onClick={onSelectCategory(id)}
+          >
+            {name}
+          </div>
+        ))
+      ) : (
+        <Typography variant="body1">
+          There are no categories. Add one on the button above.
+        </Typography>
+      )}
     </div>
   );
 };
