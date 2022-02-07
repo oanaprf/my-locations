@@ -7,6 +7,7 @@ import {
   EDIT_CATEGORY,
   SELECT_LOCATION,
   DELETE_LOCATION,
+  EDIT_LOCATION,
   SET_VIEW,
 } from "./actionTypes";
 
@@ -25,3 +26,4 @@ export const editCategory = createAction(EDIT_CATEGORY);
 export const addLocation = createAction(ADD_LOCATION);
 export const selectLocation = createAction(SELECT_LOCATION);
 export const deleteLocation = createAction(DELETE_LOCATION);
+export const editLocation = createAction(EDIT_LOCATION);

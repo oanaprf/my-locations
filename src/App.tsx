@@ -6,6 +6,8 @@ import CategoriesList from "./components/categories/CategoriesList";
 import Locations from "./components/locations/LocationsList";
 import AddCategory from "./components/categories/AddCategory";
 import ViewCategory from "./components/categories/ViewCategory";
+import AddLocation from "./components/locations/AddLocation";
+import ViewLocation from "./components/locations/ViewLocation";
 
 const useStyles = makeStyles({
   app: {
@@ -42,6 +44,9 @@ const App = () => {
           <Route path="/categories/:id/view" element={<ViewCategory />} />
           <Route path="/categories/:id/edit" element={<AddCategory />} />
           <Route path="/categories" element={<CategoriesList />} />
+          <Route path="/locations/add" element={<AddLocation />} />
+          <Route path="/locations/:id/view" element={<ViewLocation />} />
+          <Route path="/locations/:id/edit" element={<AddLocation />} />
           <Route path="/locations" element={<Locations />} />
           <Route path="/" element={<Navigate to="/categories" />} />
         </Routes>

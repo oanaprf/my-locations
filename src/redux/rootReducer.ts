@@ -7,6 +7,7 @@ import {
   DELETE_CATEGORY,
   DELETE_LOCATION,
   EDIT_CATEGORY,
+  EDIT_LOCATION,
   SELECT_CATEGORY,
   SELECT_LOCATION,
   SET_VIEW,
@@ -55,7 +56,7 @@ const categoriesReducer = (
 
 const locationsInitialState = {
   locations: [],
-  selectedLocation: "",
+  selectedLocationId: "",
 };
 const locationsReducer = (
   state = locationsInitialState,
@@ -69,7 +70,14 @@ const locationsReducer = (
     case DELETE_LOCATION:
       return {
         ...state,
+        selectedLocationId: "",
         locations: deleteItem(state?.locations, action?.payload as string),
+      };
+    case EDIT_LOCATION:
+      return {
+        ...state,
+        selectedLocationId: "",
+        locations: editItem(state?.locations, action?.payload as Category | Location),
       };
     default:
       return state;

@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setView } from "../../redux/actions";
+import { selectCategory, selectLocation, setView } from "../../redux/actions";
 import { getView } from "../../redux/selectors";
 import { VIEWS } from "../../utils/types";
 import Actions from "./Actions";
@@ -31,9 +31,11 @@ const Toolbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const view: VIEWS = useSelector(getView);
+  const selectAction = view === VIEWS.CATEGORIES ? selectCategory : selectLocation;
 
   const onViewChange = () => {
     dispatch(setView(viewMapping[view].toggle));
+    dispatch(selectAction(""));
     navigate(viewMapping[view].route);
   };
 
