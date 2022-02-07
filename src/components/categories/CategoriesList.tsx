@@ -9,12 +9,13 @@ const useStyles = makeStyles({
   categories: {
     display: "flex",
     flexDirection: "column",
+    width: 500,
   },
   category: {
     backgroundColor: "white",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 20,
-    marginBottom: 10,
+    marginBottom: 5,
     "&:hover": {
       cursor: "pointer",
       backgroundColor: "#e8f0f9",

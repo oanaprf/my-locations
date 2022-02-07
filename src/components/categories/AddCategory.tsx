@@ -10,11 +10,11 @@ import { getCategoryById } from "../../redux/selectors";
 
 const useStyles = makeStyles({
   form: {
-    width: 300,
+    width: 400,
     minHeight: 200,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 20,
+    padding: 30,
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -22,6 +22,9 @@ const useStyles = makeStyles({
   flex: {
     display: "flex",
     alignItems: "center",
+  },
+  saveButton: {
+    alignSelf: "flex-end",
   },
 });
 
@@ -56,12 +59,12 @@ const AddCategory = () => {
       <TextField
         label="Name"
         size="small"
-        variant="outlined"
+        variant="standard"
         required
         value={name}
         onChange={onChange}
       />
-      <Button variant="contained" onClick={onSave}>
+      <Button variant="contained" onClick={onSave} className={classes.saveButton}>
         Save
       </Button>
     </div>
