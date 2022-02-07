@@ -1,4 +1,12 @@
-import { Typography, TextField, Button, IconButton } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { makeStyles } from "@mui/styles";
 import { ArrowBackIos } from "@mui/icons-material";
@@ -6,7 +14,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addLocation, editLocation } from "../../redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
-import { getLocationById } from "../../redux/selectors";
+import { getCategories, getLocationById } from "../../redux/selectors";
+import { Category } from "../../utils/types";
+import { findItem } from "../../utils/utils";
 
 const useStyles = makeStyles({
   form: {
@@ -34,10 +44,12 @@ const AddLocation = () => {
   const navigate = useNavigate();
   const params = useParams();
   const location = useSelector(getLocationById(params?.id ?? ""));
+  const categories = useSelector(getCategories);
   const [name, setName] = useState(location?.name ?? "");
   const [address, setAddress] = useState(location?.address ?? "");
   const [latitude, setLatitude] = useState(location?.coordinates?.latitude ?? "");
   const [longitude, setLongitude] = useState(location?.coordinates?.longitude ?? "");
+  const [categoryId, setCategoryId] = useState(location?.category?.id ?? "");
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setName(e?.target?.value);
@@ -47,10 +59,23 @@ const AddLocation = () => {
     setLatitude(e?.target?.value);
   const onLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setLongitude(e?.target?.value);
+  const onCategorySelect = (e: SelectChangeEvent) => setCategoryId(e?.target?.value);
 
   const onSave = () => {
     if (name) {
-      if (location?.id) dispatch(editLocation({ id: location?.id, name, address }));
+      if (location?.id)
+        dispatch(
+          editLocation({
+            id: location?.id,
+            name,
+            address,
+            coordinates: { latitude, longitude },
+            category: {
+              id: categoryId,
+              name: findItem(categories, categoryId)?.name ?? "",
+            },
+          })
+        );
       else
         dispatch(
           addLocation({
@@ -58,6 +83,10 @@ const AddLocation = () => {
             name,
             address,
             coordinates: { latitude, longitude },
+            category: {
+              id: categoryId,
+              name: findItem(categories, categoryId)?.name ?? "",
+            },
           })
         );
       navigate("/locations");
@@ -81,6 +110,7 @@ const AddLocation = () => {
         required
         value={name}
         onChange={onNameChange}
+        style={{ marginBottom: 10 }}
       />
       <TextField
         label="Address"
@@ -89,6 +119,7 @@ const AddLocation = () => {
         required
         value={address}
         onChange={onAddressChange}
+        style={{ marginBottom: 10 }}
       />
       <div className={classes.flex}>
         <TextField
@@ -98,6 +129,7 @@ const AddLocation = () => {
           required
           value={latitude}
           onChange={onLatitudeChange}
+          style={{ marginBottom: 10 }}
         />
         <TextField
           label="Longitude"
@@ -106,8 +138,20 @@ const AddLocation = () => {
           required
           value={longitude}
           onChange={onLongitudeChange}
+          style={{ marginBottom: 10 }}
         />
       </div>
+      <Select
+        value={categoryId}
+        defaultValue={categoryId}
+        label="Category"
+        onChange={onCategorySelect}
+        style={{ marginBottom: 10 }}
+      >
+        {categories?.map((category: Category) => (
+          <MenuItem value={category?.id}>{category?.name}</MenuItem>
+        ))}
+      </Select>
       <Button variant="contained" onClick={onSave} className={classes.saveButton}>
         Save
       </Button>

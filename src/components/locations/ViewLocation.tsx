@@ -71,6 +71,12 @@ const ViewLocation = () => {
             {location?.coordinates?.latitude}:{location?.coordinates?.longitude}
           </Typography>
         </div>
+        <div className={classes.flex}>
+          <Typography variant="body2" style={{ fontWeight: 700, marginRight: 10 }}>
+            Category:
+          </Typography>
+          <Typography variant="body2">{location?.category?.name}</Typography>
+        </div>
       </div>
     </div>
   );
