@@ -18,7 +18,7 @@ import { VIEWS } from "../../utils/types";
 const useStyles = makeStyles({
   container: {
     display: "flex",
-    marginLeft: 50,
+    marginLeft: 100,
   },
 });
 
